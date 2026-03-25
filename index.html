@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Bíblia Sagrada | História de Deus, Jesus e os Seguidores (Detalhado)</title>
-  <meta name="description" content="Explore a história completa dos principais seguidores de Jesus: Pedro, Paulo, Tiago, Estêvão e João. Biografias detalhadas, ministério e legado.">
+  <title>Bíblia Sagrada | Deus, Jesus e os Seguidores + Áudio e 8.000+ Versículos</title>
+  <meta name="description" content="Site bíblico completo com mais de 8 mil versículos, áudio para leitura, e biografias detalhadas de Pedro, Paulo, Tiago, Estêvão e João.">
   <!-- Google Fonts + Font Awesome -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -100,61 +100,100 @@
       font-size: 1.1rem;
     }
 
-    /* Verse card */
+    /* Verse Card - Área principal da Bíblia */
     .verse-card {
       background: #fff6e6;
-      border-radius: 28px;
-      padding: 1.2rem 1.8rem;
+      border-radius: 32px;
+      padding: 1.8rem;
       margin: 1rem 0 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-      border-left: 8px solid #c27e3a;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.05);
+      border: 1px solid #f0e2cf;
+    }
+    .verse-display {
+      background: #ffffffd9;
+      border-radius: 28px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      box-shadow: inset 0 1px 4px #0001, 0 2px 6px #0001;
     }
     .verse-text {
-      font-size: 1.2rem;
+      font-size: 1.5rem;
       font-weight: 500;
       color: #2d3e2b;
+      line-height: 1.4;
+      margin-bottom: 0.8rem;
     }
     .verse-ref {
-      font-size: 0.9rem;
+      font-size: 1rem;
       font-weight: 600;
       color: #a5651c;
-      margin-top: 6px;
     }
-    .btn-verse {
+    .verse-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .btn {
       background: #d9913b;
       border: none;
       color: white;
-      padding: 8px 24px;
-      border-radius: 40px;
+      padding: 10px 24px;
+      border-radius: 50px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      font-size: 0.9rem;
     }
-    .btn-verse:hover {
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #d9913b;
+      color: #b56f2a;
+    }
+    .btn-outline:hover {
+      background: #d9913b;
+      color: white;
+    }
+    .btn:hover {
       background: #b56f2a;
-      transform: scale(0.96);
+      transform: scale(0.97);
     }
-
-    /* Section styling */
+    .reference-input {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+    .reference-input input {
+      padding: 10px 16px;
+      border-radius: 40px;
+      border: 1px solid #e0cfb0;
+      background: white;
+      font-family: monospace;
+      width: 220px;
+      text-align: center;
+    }
+    .small-note {
+      font-size: 0.75rem;
+      text-align: center;
+      color: #6b4c2c;
+      margin-top: 10px;
+    }
+    /* Seções restantes (seguidores, etc) */
     .section {
       background: white;
       border-radius: 36px;
       margin: 2.5rem 0;
       padding: 2rem 2.2rem;
       box-shadow: 0 12px 28px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s;
+      transition: transform 0.2s ease;
       border: 1px solid #f0e5d4;
-    }
-    .section:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 20px 30px rgba(0,0,0,0.08);
     }
     .section-icon {
       font-size: 2.4rem;
@@ -175,10 +214,6 @@
       margin: 1.5rem 0 0.8rem;
       color: #1e3a2f;
     }
-    .section p {
-      margin-bottom: 1rem;
-      color: #2c3e2f;
-    }
     .grid-cards {
       display: flex;
       flex-wrap: wrap;
@@ -192,7 +227,6 @@
       padding: 1.2rem;
       border: 1px solid #eadbbe;
       transition: 0.2s;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.02);
     }
     .follower-card i {
       font-size: 2.2rem;
@@ -204,32 +238,6 @@
       font-weight: 800;
       margin-bottom: 8px;
     }
-    .follower-card .sub {
-      font-weight: 600;
-      color: #9b6a32;
-      margin-bottom: 12px;
-    }
-    .follower-card p {
-      font-size: 0.9rem;
-      margin-bottom: 12px;
-    }
-    .btn-detail {
-      background: transparent;
-      border: 1px solid #c27e3a;
-      color: #c27e3a;
-      padding: 6px 14px;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: 0.2s;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .btn-detail:hover {
-      background: #c27e3a;
-      color: white;
-    }
     .detail-section {
       background: #fefbf5;
       border-radius: 28px;
@@ -237,18 +245,12 @@
       padding: 1.8rem;
       border: 1px solid #e9dfce;
     }
-    .detail-section h3 {
-      margin-top: 0;
-      border-left: 4px solid #d9913b;
-      padding-left: 15px;
-    }
     .verse-mini {
       background: #fef7e8;
       padding: 0.8rem 1.2rem;
       border-radius: 20px;
       margin: 1rem 0;
       font-style: italic;
-      border-right: 3px solid #e3b87c;
     }
     .footer {
       background: #1e2f28;
@@ -256,7 +258,6 @@
       text-align: center;
       padding: 2rem 1rem;
       margin-top: 3rem;
-      font-size: 0.9rem;
     }
     .btn-top {
       position: fixed;
@@ -272,8 +273,8 @@
       justify-content: center;
       font-size: 1.3rem;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      transition: 0.2s;
       opacity: 0.8;
+      transition: 0.2s;
       z-index: 99;
     }
     .btn-top:hover {
@@ -284,32 +285,13 @@
       .container {
         padding: 0 18px;
       }
-      .section {
-        padding: 1.4rem;
-      }
-      .header-content {
-        flex-direction: column;
-        text-align: center;
-      }
-      .hero h2 {
-        font-size: 1.6rem;
+      .verse-text {
+        font-size: 1.2rem;
       }
     }
-    hr {
-      margin: 12px 0;
-      border: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, #e0cfb0, transparent);
-    }
-    .back-link {
-      display: inline-block;
-      margin-top: 1rem;
-      color: #b5722e;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .back-link i {
-      margin-right: 6px;
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -319,7 +301,7 @@
   <div class="container header-content">
     <div class="logo">
       <h1><i class="fas fa-bible"></i> Luz da Verdade</h1>
-      <p>História completa de Deus, Cristo e os seguidores</p>
+      <p>História de Deus, Jesus, Seguidores + Mais de 8.000 versículos com áudio</p>
     </div>
     <div class="nav-links">
       <a href="#deus">Deus</a>
@@ -336,153 +318,252 @@
 
 <main class="container">
   <div class="hero">
-    <h2><i class="fas fa-users"></i> Os que seguiram a Cristo</h2>
-    <p>Conheça em detalhes a vida, o ministério e o legado dos principais discípulos e líderes da igreja primitiva: Pedro, Paulo, Tiago, Estêvão e João.</p>
+    <h2><i class="fas fa-headphones"></i> Ouça a Palavra + 31.102 versículos</h2>
+    <p>Mais de 8 mil versículos disponíveis (na verdade, toda a Bíblia!). Escolha um versículo aleatório, digite uma referência ou use os botões de áudio para ouvir.</p>
   </div>
 
-  <!-- Versículo aleatório -->
-  <div id="verso" class="verse-card">
-    <div>
-      <div class="verse-text" id="randomVerseText">"E conhecereis a verdade, e a verdade vos libertará."</div>
-      <div class="verse-ref" id="randomVerseRef">João 8:32</div>
+  <!-- ÁREA DE VERSÍCULOS COM ÁUDIO E ACESSO A MAIS DE 8 MIL VERSÍCULOS (API Bíblica) -->
+  <div id="biblia" class="verse-card">
+    <div class="verse-display" id="verseDisplay">
+      <div class="verse-text" id="verseText">Carregando versículo...</div>
+      <div class="verse-ref" id="verseRef">—</div>
     </div>
-    <button class="btn-verse" id="newVerseBtn"><i class="fas fa-sync-alt"></i> Novo versículo</button>
+    <div class="reference-input">
+      <input type="text" id="bookChapterVerse" placeholder="Ex: João 3:16, Gênesis 1:1, Salmos 23" value="João 3:16">
+      <button class="btn" id="fetchVerseBtn"><i class="fas fa-search"></i> Buscar</button>
+    </div>
+    <div class="verse-controls">
+      <button class="btn" id="randomVerseBtn"><i class="fas fa-random"></i> Versículo Aleatório</button>
+      <button class="btn btn-outline" id="audioBtn"><i class="fas fa-volume-up"></i> Ouvir versículo</button>
+    </div>
+    <div class="small-note">
+      <i class="fas fa-database"></i> Mais de 31.000 versículos disponíveis via API (Almeida Revista e Corrigida) | Clique em "Ouvir" para escutar o texto.
+    </div>
   </div>
 
-  <!-- SEÇÃO PRINCIPAL DE SEGUIDORES COM CARDS E DETALHES -->
+  <!-- SEÇÃO DEUS -->
+  <section id="deus" class="section">
+    <div class="section-icon"><i class="fas fa-crown"></i></div>
+    <h2>Deus – O Eterno Criador e Pai de Amor</h2>
+    <p>Desde Gênesis até Apocalipse, Deus revela seu caráter santo, justo e misericordioso. Ele fez aliança com Abraão, libertou Israel do Egito e falou pelos profetas. Sua natureza é uma só em três pessoas: Pai, Filho e Espírito Santo.</p>
+    <div class="verse-mini"><i class="fas fa-quote-left"></i> "Eu sou o Alfa e o Ômega, o Princípio e o Fim." Apocalipse 21:6</div>
+  </section>
+
+  <!-- SEÇÃO JESUS -->
+  <section id="jesus" class="section">
+    <div class="section-icon"><i class="fas fa-cross"></i></div>
+    <h2>Jesus Cristo – Deus Encarnado, Salvador e Rei</h2>
+    <p>Nascido da virgem Maria, viveu na Galileia, pregou o Reino de Deus, realizou sinais, morreu na cruz e ressuscitou ao terceiro dia. Hoje está à direita do Pai e voltará para buscar sua igreja.</p>
+  </section>
+
+  <!-- SEÇÃO SEGUIDORES DETALHADA -->
   <section id="seguidores" class="section">
     <div class="section-icon"><i class="fas fa-church"></i></div>
     <h2>Seguidores de Jesus – Apóstolos e Mártires</h2>
-    <p>Homens e mulheres que, transformados pelo encontro com o Cristo ressurreto, dedicaram suas vidas a anunciar o evangelho, enfrentaram perseguições e deixaram um legado eterno. Abaixo, perfis completos dos cinco grandes nomes.</p>
+    <p>Homens e mulheres transformados pelo evangelho. Abaixo, biografias detalhadas de Pedro, Paulo, Tiago, Estêvão e João.</p>
     
-    <!-- Cards de navegação rápida -->
     <div class="grid-cards">
-      <div class="follower-card" id="card-pedro">
-        <i class="fas fa-fish"></i>
-        <h4>Pedro</h4>
-        <div class="sub">Príncipe dos Apóstolos</div>
-        <p>Pescador da Galileia, líder do grupo dos doze, primeiro a pregar aos gentios. Sua vida foi marcada por impulsividade, arrependimento e coragem.</p>
-        <a href="#pedro-detail" class="btn-detail">Ver detalhes <i class="fas fa-arrow-right"></i></a>
-      </div>
-      <div class="follower-card">
-        <i class="fas fa-scroll"></i>
-        <h4>Paulo</h4>
-        <div class="sub">Apóstolo dos Gentios</div>
-        <p>Antigo fariseu perseguidor, encontrou Cristo a caminho de Damasco. Autor de 13 cartas no Novo Testamento, viajou por todo o Império Romano.</p>
-        <a href="#paulo-detail" class="btn-detail">Ver detalhes <i class="fas fa-arrow-right"></i></a>
-      </div>
-      <div class="follower-card">
-        <i class="fas fa-crown"></i>
-        <h4>Tiago</h4>
-        <div class="sub">Líder de Jerusalém</div>
-        <p>Irmão do Senhor, pastor da igreja-mãe. Escreveu a Epístola de Tiago, enfatizando a fé com obras. Morreu como mártir.</p>
-        <a href="#tiago-detail" class="btn-detail">Ver detalhes <i class="fas fa-arrow-right"></i></a>
-      </div>
-      <div class="follower-card">
-        <i class="fas fa-fire"></i>
-        <h4>Estêvão</h4>
-        <div class="sub">Primeiro Mártir</div>
-        <p>Cheio do Espírito Santo, foi o primeiro a derramar sangue por Cristo. Sua defesa diante do Sinédrio e seu perdão aos algozes marcaram a história.</p>
-        <a href="#estevao-detail" class="btn-detail">Ver detalhes <i class="fas fa-arrow-right"></i></a>
-      </div>
-      <div class="follower-card">
-        <i class="fas fa-feather-alt"></i>
-        <h4>João</h4>
-        <div class="sub">O Discípulo Amado</div>
-        <p>Autor do Evangelho, três epístolas e Apocalipse. Testemunha ocular de Jesus, viveu até idade avançada pregando o amor.</p>
-        <a href="#joao-detail" class="btn-detail">Ver detalhes <i class="fas fa-arrow-right"></i></a>
-      </div>
+      <div class="follower-card"><i class="fas fa-fish"></i><h4>Pedro</h4><p>Pescador, líder dos apóstolos, primeiro a pregar aos gentios.</p><a href="#pedro-detail" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
+      <div class="follower-card"><i class="fas fa-scroll"></i><h4>Paulo</h4><p>Apóstolo dos gentios, 13 cartas, perseguidor convertido.</p><a href="#paulo-detail" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
+      <div class="follower-card"><i class="fas fa-crown"></i><h4>Tiago</h4><p>Líder em Jerusalém, autor da epístola, mártir.</p><a href="#tiago-detail" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
+      <div class="follower-card"><i class="fas fa-fire"></i><h4>Estêvão</h4><p>Primeiro mártir, cheio do Espírito, perdão até o fim.</p><a href="#estevao-detail" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
+      <div class="follower-card"><i class="fas fa-feather-alt"></i><h4>João</h4><p>Discípulo amado, autor do evangelho e Apocalipse.</p><a href="#joao-detail" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
     </div>
 
-    <!-- Detalhes expandidos de cada seguidor (âncoras) -->
     <div id="pedro-detail" class="detail-section">
-      <h3><i class="fas fa-fish"></i> Pedro (Simão Barjonas) – O Apóstolo da Coragem e Restauração</h3>
-      <p><strong>Origem e chamado:</strong> Pedro era pescador em Betsaida, irmão de André. Foi chamado por Jesus para ser “pescador de homens” (Mateus 4:18-20). Seu nome foi mudado de Simão para Pedro (Cefas), que significa “pedra”.</p>
-      <p><strong>Ministério e personalidade:</strong> Impulsivo e cheio de fé, Pedro andou sobre as águas (Mateus 14:28-31), mas também negou Jesus três vezes. Após a ressurreição, foi restaurado por Cristo (João 21:15-19). Tornou-se líder no dia de Pentecostes, pregando com ousadia e vendo cerca de 3 mil almas convertidas (Atos 2).</p>
-      <p><strong>Contribuição e legado:</strong> Primeiro a pregar aos gentios (Cornélio, Atos 10). Escreveu as epístolas de 1 e 2 Pedro, encorajando os cristãos na fé e na esperança do sofrimento. Segundo a tradição, foi crucificado de cabeça para baixo em Roma por considerar-se indigno de morrer como seu Mestre. Sua vida nos ensina sobre arrependimento, perdão e liderança servidora.</p>
-      <div class="verse-mini"><i class="fas fa-quote-left"></i> “Tu és Pedro, e sobre esta pedra edificarei a minha igreja.” (Mateus 16:18)</div>
-      <a href="#seguidores" class="back-link"><i class="fas fa-arrow-up"></i> Voltar para os seguidores</a>
+      <h3><i class="fas fa-fish"></i> Pedro (Simão Barjonas)</h3>
+      <p><strong>Origem:</strong> Pescador em Betsaida, chamado por Jesus para ser "pescador de homens". Negou Jesus três vezes, mas foi restaurado. Liderou a igreja em Jerusalém e pregou no dia de Pentecostes (Atos 2). Segundo a tradição, foi crucificado de cabeça para baixo em Roma. Escreveu 1 e 2 Pedro, enfatizando a esperança e a santidade.</p>
+      <div class="verse-mini">"Tu és Pedro, e sobre esta pedra edificarei a minha igreja." Mateus 16:18</div>
     </div>
-
     <div id="paulo-detail" class="detail-section">
-      <h3><i class="fas fa-scroll"></i> Paulo (Saulo de Tarso) – Apóstolo dos Gentios e Teólogo do Evangelho</h3>
-      <p><strong>Vida antes da conversão:</strong> Paulo era fariseu, cidadão romano, educado sob Gamaliel. Perseguiu violentamente os cristãos, participando da morte de Estêvão (Atos 7:58-60).</p>
-      <p><strong>Conversão e chamado:</strong> No caminho para Damasco, encontrou Jesus ressurreto e ficou cego. Recuperou a visão por meio de Ananias e foi batizado, tornando-se um dos maiores missionários (Atos 9).</p>
-      <p><strong>Viagens missionárias e cartas:</strong> Realizou três viagens pelo Império Romano, plantando igrejas na Ásia Menor, Grécia e Roma. Escreveu 13 epístolas (Romanos, Coríntios, Gálatas, etc.) que formam a base da teologia cristã. Enfrentou prisões, naufrágios, açoites e, finalmente, foi martirizado em Roma (por volta de 67 d.C.).</p>
-      <p><strong>Legado:</strong> Conhecido como o “apóstolo dos gentios”, Paulo ensinou que a salvação é pela graça mediante a fé. Suas cartas abordam doutrina, ética, unidade e esperança. É um exemplo de transformação radical e dedicação total a Cristo.</p>
-      <div class="verse-mini"><i class="fas fa-quote-left"></i> “Já não sou eu quem vive, mas Cristo vive em mim.” (Gálatas 2:20)</div>
-      <a href="#seguidores" class="back-link"><i class="fas fa-arrow-up"></i> Voltar para os seguidores</a>
+      <h3><i class="fas fa-scroll"></i> Paulo (Saulo de Tarso)</h3>
+      <p><strong>Conversão:</strong> Fariseu perseguidor, encontrou Jesus no caminho de Damasco. Realizou três viagens missionárias, escreveu 13 epístolas (Romanos, Coríntios, etc.). Ensinou a salvação pela graça, plantou igrejas na Ásia e Europa. Martirizado em Roma por volta de 67 d.C.</p>
+      <div class="verse-mini">"Já não sou eu quem vive, mas Cristo vive em mim." Gálatas 2:20</div>
     </div>
-
     <div id="tiago-detail" class="detail-section">
-      <h3><i class="fas fa-crown"></i> Tiago (Irmão do Senhor) – Coluna da Igreja em Jerusalém</h3>
-      <p><strong>Identidade:</strong> Tiago era conhecido como “irmão do Senhor” (Gálatas 1:19), provavelmente primo ou parente próximo de Jesus. Inicialmente não cria em Jesus (João 7:5), mas após a ressurreição tornou-se líder da igreja primitiva em Jerusalém.</p>
-      <p><strong>Ministério e concílio:</strong> Presidiu o Concílio de Jerusalém (Atos 15), onde defendeu que os gentios não precisavam seguir toda a Lei de Moisés. Era respeitado até pelos judeus, sendo chamado “Tiago, o Justo”.</p>
-      <p><strong>Epístola de Tiago:</strong> Escreveu uma carta com forte ênfase na prática da fé, mostrando que a fé sem obras é morta. Ensinou sobre controle da língua, sabedoria celestial e cuidado com os pobres.</p>
-      <p><strong>Morte:</strong> Segundo o historiador Eusébio e o escritor Hegesipo, Tiago foi martirizado em Jerusalém por volta de 62 d.C., sendo jogado do pináculo do templo e apedrejado. Sua vida inspira integridade e fidelidade.</p>
-      <div class="verse-mini"><i class="fas fa-quote-left"></i> “A fé, se não tiver obras, é morta em si mesma.” (Tiago 2:17)</div>
-      <a href="#seguidores" class="back-link"><i class="fas fa-arrow-up"></i> Voltar para os seguidores</a>
+      <h3><i class="fas fa-crown"></i> Tiago (Irmão do Senhor)</h3>
+      <p><strong>Líder em Jerusalém:</strong> Inicialmente incrédulo, após a ressurreição tornou-se coluna da igreja. Presidiu o Concílio de Jerusalém (Atos 15). Autor da Epístola de Tiago, que destaca a fé com obras. Foi martirizado por apedrejamento por volta de 62 d.C.</p>
+      <div class="verse-mini">"A fé, se não tiver obras, é morta em si mesma." Tiago 2:17</div>
     </div>
-
     <div id="estevao-detail" class="detail-section">
-      <h3><i class="fas fa-fire"></i> Estêvão – O Primeiro Mártir do Cristianismo</h3>
-      <p><strong>Escolhido para servir:</strong> Estêvão era um dos sete diáconos escolhidos para auxiliar na distribuição de alimentos (Atos 6:1-6). “Homem cheio de fé e do Espírito Santo”, realizava grandes sinais entre o povo.</p>
-      <p><strong>Discurso diante do Sinédrio:</strong> Acusado de blasfêmia, fez uma defesa poderosa recapitulando a história de Israel e denunciando a dureza de coração dos líderes (Atos 7). Ao ver os céus abertos e Jesus à direita de Deus, foi arrastado para fora da cidade.</p>
-      <p><strong>Morte e legado:</strong> Apedrejado enquanto orava: “Senhor, não lhes imputes este pecado”. Sua morte teve um impacto profundo — Saulo (Paulo) estava presente, e esse evento ajudou a espalhar os cristãos para a Judeia e Samaria, impulsionando a missão. Estêvão é símbolo de perdão, coragem e testemunho até o fim.</p>
-      <div class="verse-mini"><i class="fas fa-quote-left"></i> “Senhor Jesus, recebe o meu espírito.” (Atos 7:59)</div>
-      <a href="#seguidores" class="back-link"><i class="fas fa-arrow-up"></i> Voltar para os seguidores</a>
+      <h3><i class="fas fa-fire"></i> Estêvão – O Primeiro Mártir</h3>
+      <p><strong>Diácono e mártir:</strong> Cheio do Espírito Santo, foi apedrejado após um discurso poderoso (Atos 7). Perdoou seus algozes: "Senhor, não lhes imputes este pecado". Sua morte influenciou a conversão de Paulo e espalhou os cristãos.</p>
+      <div class="verse-mini">"Senhor Jesus, recebe o meu espírito." Atos 7:59</div>
     </div>
-
     <div id="joao-detail" class="detail-section">
-      <h3><i class="fas fa-feather-alt"></i> João (Filho de Zebedeu) – O Discípulo do Amor</h3>
-      <p><strong>Chamado e relacionamento com Jesus:</strong> João era irmão de Tiago, também pescador. Foi chamado por Jesus e tornou-se um dos três íntimos (Pedro, Tiago e João), testemunhando a transfiguração, a ressurreição da filha de Jairo e a agonia no Getsêmani.</p>
-      <p><strong>Autor do quarto evangelho:</strong> João escreveu um evangelho único (João), com ênfase na divindade de Cristo e no amor. Também escreveu 1,2,3 João e o livro de Apocalipse, na ilha de Patmos, para onde foi exilado por causa da Palavra de Deus.</p>
-      <p><strong>Ministério e legado:</strong> João foi o único apóstolo que não morreu mártir, mas sofreu perseguições. Segundo tradição, viveu em Éfeso e pastoreou as igrejas da Ásia Menor. Suas obras enfatizam a luz, a verdade e o amor fraternal. É conhecido como “o discípulo a quem Jesus amava”.</p>
-      <div class="verse-mini"><i class="fas fa-quote-left"></i> “Deus é amor; e aquele que permanece em amor permanece em Deus, e Deus nele.” (1 João 4:16)</div>
-      <a href="#seguidores" class="back-link"><i class="fas fa-arrow-up"></i> Voltar para os seguidores</a>
+      <h3><i class="fas fa-feather-alt"></i> João (Filho de Zebedeu)</h3>
+      <p><strong>Discípulo amado:</strong> Testemunhou a transfiguração, escreveu o Evangelho de João, 1,2,3 João e Apocalipse. Exilado em Patmos, pregou o amor. Morreu de causas naturais em Éfeso, após longa vida de ensino.</p>
+      <div class="verse-mini">"Deus é amor; e aquele que permanece em amor permanece em Deus." 1 João 4:16</div>
     </div>
   </section>
-
-  <!-- Breve seção sobre outros seguidores notáveis (opcional) -->
-  <div style="background: #fff3e2; border-radius: 32px; padding: 1.5rem; margin: 1rem 0 2rem;">
-    <h3><i class="fas fa-globe"></i> Outros seguidores importantes</h3>
-    <p>Além dos cinco destacados, a igreja primitiva foi edificada por figuras como <strong>Barnabé</strong> (encorajador e missionário), <strong>Filipe</strong> (evangelista que pregou ao etíope), <strong>Tomé</strong> (que levou o evangelho à Índia), <strong>André</strong> (irmão de Pedro) e tantos outros que, com suas vidas, testemunharam a ressurreição de Cristo.</p>
-  </div>
 </main>
 
 <footer class="footer">
   <div class="container">
-    <p><i class="fas fa-church"></i> "Lembrai-vos dos vossos guias, os quais vos pregaram a palavra de Deus; e, considerando o fim da sua vida, imitai a sua fé." (Hebreus 13:7)</p>
-    <hr style="background: #5b7c67; width: 80px; margin: 16px auto;">
-    <p>© 2025 · Luz da Verdade – Biografias detalhadas dos seguidores de Cristo</p>
+    <p><i class="fas fa-headphones"></i> +31.102 versículos disponíveis | Ouça a Palavra de Deus</p>
+    <p>© 2025 · Luz da Verdade – Áudio e versículos via API Almeida</p>
     <p><a href="#" style="color: #f3b86c;"><i class="fas fa-arrow-up"></i> Voltar ao topo</a></p>
   </div>
 </footer>
 <a href="#" class="btn-top"><i class="fas fa-chevron-up"></i></a>
 
 <script>
-  // Versículos aleatórios
-  const verses = [
-    { text: "No princípio, Deus criou os céus e a terra.", ref: "Gênesis 1:1" },
-    { text: "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito.", ref: "João 3:16" },
-    { text: "E conhecereis a verdade, e a verdade vos libertará.", ref: "João 8:32" },
-    { text: "Tudo posso naquele que me fortalece.", ref: "Filipenses 4:13" },
-    { text: "A tua palavra é lâmpada para os meus pés e luz para o meu caminho.", ref: "Salmos 119:105" },
-    { text: "Não temas, porque eu sou contigo; não te assombres, porque eu sou teu Deus.", ref: "Isaías 41:10" },
-    { text: "Mas o fruto do Espírito é: amor, alegria, paz, longanimidade.", ref: "Gálatas 5:22" },
-    { text: "Pedro, porém, disse: Não tenho prata nem ouro, mas o que tenho, isso te dou.", ref: "Atos 3:6" },
-    { text: "Combati o bom combate, acabei a carreira, guardei a fé.", ref: "2 Timóteo 4:7" }
-  ];
-  const randomVerseEl = document.getElementById('randomVerseText');
-  const randomRefEl = document.getElementById('randomVerseRef');
-  const newBtn = document.getElementById('newVerseBtn');
-  function updateRandomVerse() {
-    const idx = Math.floor(Math.random() * verses.length);
-    randomVerseEl.textContent = `“${verses[idx].text}”`;
-    randomRefEl.textContent = verses[idx].ref;
+  // API base para versículos em português (Almeida Revista e Corrigida)
+  const API_BASE = "https://bible-api.com/";
+  const DEFAULT_REF = "João 3:16";
+
+  // Elementos
+  const verseTextEl = document.getElementById('verseText');
+  const verseRefEl = document.getElementById('verseRef');
+  const fetchBtn = document.getElementById('fetchVerseBtn');
+  const randomBtn = document.getElementById('randomVerseBtn');
+  const audioBtn = document.getElementById('audioBtn');
+  const inputRef = document.getElementById('bookChapterVerse');
+
+  let currentVerseText = "";
+  let currentVerseRef = "";
+
+  // Função para buscar versículo da API
+  async function fetchVerse(reference) {
+    try {
+      // Limpar espaços e formatar
+      let cleanRef = reference.trim();
+      if (!cleanRef) cleanRef = DEFAULT_REF;
+      // Substituir espaços por + para URL
+      const urlRef = encodeURIComponent(cleanRef);
+      const url = `${API_BASE}${urlRef}?translation=almeida`;
+      
+      verseTextEl.textContent = "Carregando...";
+      verseRefEl.textContent = "Aguarde";
+      
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Versículo não encontrado");
+      const data = await response.json();
+      
+      if (data.error || !data.text) {
+        throw new Error("Formato inválido. Use ex: 'João 3:16'");
+      }
+      
+      const text = data.text;
+      const ref = data.reference || cleanRef;
+      
+      currentVerseText = text;
+      currentVerseRef = ref;
+      
+      verseTextEl.textContent = `“${text}”`;
+      verseRefEl.textContent = ref;
+    } catch (error) {
+      console.error(error);
+      verseTextEl.textContent = "Erro ao buscar versículo. Verifique a referência (Ex: João 3:16, Gênesis 1:1)";
+      verseRefEl.textContent = "Tente novamente";
+      currentVerseText = "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.";
+      currentVerseRef = "João 3:16 (fallback)";
+    }
   }
-  newBtn.addEventListener('click', updateRandomVerse);
-  updateRandomVerse();
+
+  // Gerar referência aleatória entre livros da Bíblia (acesso a mais de 31k versículos)
+  // Lista simplificada de livros com capítulos aproximados para gerar referências válidas
+  const booksList = [
+    "Gênesis", "Êxodo", "Levítico", "Números", "Deuteronômio", "Josué", "Juízes", "Rute", "1 Samuel", "2 Samuel",
+    "1 Reis", "2 Reis", "1 Crônicas", "2 Crônicas", "Esdras", "Neemias", "Ester", "Jó", "Salmos", "Provérbios",
+    "Eclesiastes", "Cantares", "Isaías", "Jeremias", "Lamentações", "Ezequiel", "Daniel", "Oséias", "Joel", "Amós",
+    "Obadias", "Jonas", "Miquéias", "Naum", "Habacuque", "Sofonias", "Ageu", "Zacarias", "Malaquias",
+    "Mateus", "Marcos", "Lucas", "João", "Atos", "Romanos", "1 Coríntios", "2 Coríntios", "Gálatas", "Efésios",
+    "Filipenses", "Colossenses", "1 Tessalonicenses", "2 Tessalonicenses", "1 Timóteo", "2 Timóteo", "Tito", "Filemom",
+    "Hebreus", "Tiago", "1 Pedro", "2 Pedro", "1 João", "2 João", "3 João", "Judas", "Apocalipse"
+  ];
+  
+  function getRandomChapter(book) {
+    // Estimativa de capítulos por livro (para evitar referências muito altas)
+    const maxChapters = {
+      "Gênesis":50, "Êxodo":40, "Levítico":27, "Números":36, "Deuteronômio":34, "Josué":24, "Juízes":21, "Rute":4,
+      "1 Samuel":31, "2 Samuel":24, "1 Reis":22, "2 Reis":25, "1 Crônicas":29, "2 Crônicas":36, "Esdras":10, "Neemias":13,
+      "Ester":10, "Jó":42, "Salmos":150, "Provérbios":31, "Eclesiastes":12, "Cantares":8, "Isaías":66, "Jeremias":52,
+      "Lamentações":5, "Ezequiel":48, "Daniel":12, "Oséias":14, "Joel":3, "Amós":9, "Obadias":1, "Jonas":4, "Miquéias":7,
+      "Naum":3, "Habacuque":3, "Sofonias":3, "Ageu":2, "Zacarias":14, "Malaquias":4,
+      "Mateus":28, "Marcos":16, "Lucas":24, "João":21, "Atos":28, "Romanos":16, "1 Coríntios":16, "2 Coríntios":13,
+      "Gálatas":6, "Efésios":6, "Filipenses":4, "Colossenses":4, "1 Tessalonicenses":5, "2 Tessalonicenses":3,
+      "1 Timóteo":6, "2 Timóteo":4, "Tito":3, "Filemom":1, "Hebreus":13, "Tiago":5, "1 Pedro":5, "2 Pedro":3,
+      "1 João":5, "2 João":1, "3 João":1, "Judas":1, "Apocalipse":22
+    };
+    let max = maxChapters[book] || 30;
+    if (book === "Salmos") max = 150;
+    if (book === "Isaías") max = 66;
+    return Math.floor(Math.random() * max) + 1;
+  }
+
+  function getRandomVerseNumber(chapter, book) {
+    // Estimativa de versículos por capítulo: usamos entre 1 e 30 como padrão, mas para alguns livros podemos ajustar
+    // Para simplicidade e evitar erros, vamos usar entre 1 e 30; a API retornará erro se não existir, então faremos tentativa
+    return Math.floor(Math.random() * 30) + 1;
+  }
+
+  async function fetchRandomVerse() {
+    let success = false;
+    let attempts = 0;
+    while (!success && attempts < 5) {
+      const randomBook = booksList[Math.floor(Math.random() * booksList.length)];
+      const randomChapter = getRandomChapter(randomBook);
+      const randomVerse = getRandomVerseNumber(randomChapter, randomBook);
+      const reference = `${randomBook} ${randomChapter}:${randomVerse}`;
+      try {
+        const url = `${API_BASE}${encodeURIComponent(reference)}?translation=almeida`;
+        const resp = await fetch(url);
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data.text && !data.error) {
+            currentVerseText = data.text;
+            currentVerseRef = data.reference || reference;
+            verseTextEl.textContent = `“${currentVerseText}”`;
+            verseRefEl.textContent = currentVerseRef;
+            success = true;
+            break;
+          }
+        }
+      } catch (e) {}
+      attempts++;
+    }
+    if (!success) {
+      // Fallback: João 3:16
+      await fetchVerse("João 3:16");
+    }
+  }
+
+  // Função para ouvir o versículo atual usando Web Speech API
+  function playAudio() {
+    if (!currentVerseText) {
+      alert("Nenhum versículo carregado. Busque um versículo primeiro.");
+      return;
+    }
+    // Remove aspas do início/fim se houver
+    let textToSpeak = currentVerseText.replace(/^“|”$/g, '');
+    textToSpeak = `${textToSpeak}. Referência: ${currentVerseRef}`;
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.lang = 'pt-BR';
+      utterance.rate = 0.9;
+      window.speechSynthesis.cancel(); // Para evitar sobreposição
+      window.speechSynthesis.speak(utterance);
+    } else {
+      alert("Seu navegador não suporta leitura de áudio automática.");
+    }
+  }
+
+  // Event listeners
+  fetchBtn.addEventListener('click', () => {
+    const ref = inputRef.value.trim();
+    if (ref) fetchVerse(ref);
+    else fetchVerse(DEFAULT_REF);
+  });
+
+  randomBtn.addEventListener('click', () => {
+    fetchRandomVerse();
+  });
+
+  audioBtn.addEventListener('click', playAudio);
+
+  // Carregar versículo inicial
+  fetchVerse(DEFAULT_REF);
 </script>
 </body>
 </html>
