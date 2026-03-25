@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Bíblia Sagrada | Deus, Jesus e os Seguidores + Áudio e 8.000+ Versículos</title>
-  <meta name="description" content="Site bíblico completo com mais de 8 mil versículos, áudio para leitura, e biografias detalhadas de Pedro, Paulo, Tiago, Estêvão e João.">
+  <meta name="description" content="Site bíblico completo com mais de 8 mil versículos, áudio com leitura do versículo e referência, e biografias detalhadas de Pedro, Paulo, Tiago, Estêvão e João.">
   <!-- Google Fonts + Font Awesome -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -320,6 +320,7 @@
   <div class="hero">
     <h2><i class="fas fa-headphones"></i> Ouça a Palavra + 31.102 versículos</h2>
     <p>Mais de 8 mil versículos disponíveis (na verdade, toda a Bíblia!). Escolha um versículo aleatório, digite uma referência ou use os botões de áudio para ouvir.</p>
+    <p><strong>Áudio:</strong> O versículo é lido e, ao final, a referência (livro, capítulo e versículo) é anunciada.</p>
   </div>
 
   <!-- ÁREA DE VERSÍCULOS COM ÁUDIO E ACESSO A MAIS DE 8 MIL VERSÍCULOS (API Bíblica) -->
@@ -337,7 +338,7 @@
       <button class="btn btn-outline" id="audioBtn"><i class="fas fa-volume-up"></i> Ouvir versículo</button>
     </div>
     <div class="small-note">
-      <i class="fas fa-database"></i> Mais de 31.000 versículos disponíveis via API (Almeida Revista e Corrigida) | Clique em "Ouvir" para escutar o texto do versículo.
+      <i class="fas fa-database"></i> Mais de 31.000 versículos disponíveis via API (Almeida Revista e Corrigida) | O áudio lê o texto e a referência.
     </div>
   </div>
 
@@ -363,34 +364,34 @@
     <p>Homens e mulheres transformados pelo evangelho. Abaixo, biografias detalhadas de Pedro, Paulo, Tiago, Estêvão e João.</p>
     
     <div class="grid-cards">
-      <div class="follower-card"><i class="fas fa-fish"></i><h4>Pedro</h4><p>Pescador, líder dos apóstolos, primeiro a pregar aos gentios.</p><a href="#pedro-detail" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
-      <div class="follower-card"><i class="fas fa-scroll"></i><h4>Paulo</h4><p>Apóstolo dos gentios, 13 cartas, perseguidor convertido.</p><a href="#paulo-detail" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
-      <div class="follower-card"><i class="fas fa-crown"></i><h4>Tiago</h4><p>Líder em Jerusalém, autor da epístola, mártir.</p><a href="#tiago-detail" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
-      <div class="follower-card"><i class="fas fa-fire"></i><h4>Estêvão</h4><p>Primeiro mártir, cheio do Espírito, perdão até o fim.</p><a href="#estevao-detail" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
-      <div class="follower-card"><i class="fas fa-feather-alt"></i><h4>João</h4><p>Discípulo amado, autor do evangelho e Apocalipse.</p><a href="#joao-detail" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
+      <div class="follower-card"><i class="fas fa-fish"></i><h4>Pedro</h4><p>Pescador, líder dos apóstolos, primeiro a pregar aos gentios.</p><a href="#pedro" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
+      <div class="follower-card"><i class="fas fa-scroll"></i><h4>Paulo</h4><p>Apóstolo dos gentios, 13 cartas, perseguidor convertido.</p><a href="#paulo" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
+      <div class="follower-card"><i class="fas fa-crown"></i><h4>Tiago</h4><p>Líder em Jerusalém, autor da epístola, mártir.</p><a href="#tiago" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
+      <div class="follower-card"><i class="fas fa-fire"></i><h4>Estêvão</h4><p>Primeiro mártir, cheio do Espírito, perdão até o fim.</p><a href="#estevao" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
+      <div class="follower-card"><i class="fas fa-feather-alt"></i><h4>João</h4><p>Discípulo amado, autor do evangelho e Apocalipse.</p><a href="#joao" class="btn-detail" style="display:inline-block; margin-top:8px; background:#e7dcc8; padding:6px 12px; border-radius:30px;">Ver detalhes →</a></div>
     </div>
 
-    <div id="pedro-detail" class="detail-section">
+    <div id="pedro" class="detail-section">
       <h3><i class="fas fa-fish"></i> Pedro (Simão Barjonas)</h3>
       <p><strong>Origem:</strong> Pescador em Betsaida, chamado por Jesus para ser "pescador de homens". Negou Jesus três vezes, mas foi restaurado. Liderou a igreja em Jerusalém e pregou no dia de Pentecostes (Atos 2). Segundo a tradição, foi crucificado de cabeça para baixo em Roma. Escreveu 1 e 2 Pedro, enfatizando a esperança e a santidade.</p>
       <div class="verse-mini">"Tu és Pedro, e sobre esta pedra edificarei a minha igreja." Mateus 16:18</div>
     </div>
-    <div id="paulo-detail" class="detail-section">
+    <div id="paulo" class="detail-section">
       <h3><i class="fas fa-scroll"></i> Paulo (Saulo de Tarso)</h3>
       <p><strong>Conversão:</strong> Fariseu perseguidor, encontrou Jesus no caminho de Damasco. Realizou três viagens missionárias, escreveu 13 epístolas (Romanos, Coríntios, etc.). Ensinou a salvação pela graça, plantou igrejas na Ásia e Europa. Martirizado em Roma por volta de 67 d.C.</p>
       <div class="verse-mini">"Já não sou eu quem vive, mas Cristo vive em mim." Gálatas 2:20</div>
     </div>
-    <div id="tiago-detail" class="detail-section">
+    <div id="tiago" class="detail-section">
       <h3><i class="fas fa-crown"></i> Tiago (Irmão do Senhor)</h3>
       <p><strong>Líder em Jerusalém:</strong> Inicialmente incrédulo, após a ressurreição tornou-se coluna da igreja. Presidiu o Concílio de Jerusalém (Atos 15). Autor da Epístola de Tiago, que destaca a fé com obras. Foi martirizado por apedrejamento por volta de 62 d.C.</p>
       <div class="verse-mini">"A fé, se não tiver obras, é morta em si mesma." Tiago 2:17</div>
     </div>
-    <div id="estevao-detail" class="detail-section">
+    <div id="estevao" class="detail-section">
       <h3><i class="fas fa-fire"></i> Estêvão – O Primeiro Mártir</h3>
       <p><strong>Diácono e mártir:</strong> Cheio do Espírito Santo, foi apedrejado após um discurso poderoso (Atos 7). Perdoou seus algozes: "Senhor, não lhes imputes este pecado". Sua morte influenciou a conversão de Paulo e espalhou os cristãos.</p>
       <div class="verse-mini">"Senhor Jesus, recebe o meu espírito." Atos 7:59</div>
     </div>
-    <div id="joao-detail" class="detail-section">
+    <div id="joao" class="detail-section">
       <h3><i class="fas fa-feather-alt"></i> João (Filho de Zebedeu)</h3>
       <p><strong>Discípulo amado:</strong> Testemunhou a transfiguração, escreveu o Evangelho de João, 1,2,3 João e Apocalipse. Exilado em Patmos, pregou o amor. Morreu de causas naturais em Éfeso, após longa vida de ensino.</p>
       <div class="verse-mini">"Deus é amor; e aquele que permanece em amor permanece em Deus." 1 João 4:16</div>
@@ -400,7 +401,7 @@
 
 <footer class="footer">
   <div class="container">
-    <p><i class="fas fa-headphones"></i> +31.102 versículos disponíveis | Ouça a Palavra de Deus (apenas o texto do versículo)</p>
+    <p><i class="fas fa-headphones"></i> +31.102 versículos disponíveis | O áudio lê o versículo e depois a referência (livro, capítulo e versículo).</p>
     <p>© 2025 · Luz da Verdade – Áudio e versículos via API Almeida</p>
     <p><a href="#" style="color: #f3b86c;"><i class="fas fa-arrow-up"></i> Voltar ao topo</a></p>
   </div>
@@ -519,14 +520,16 @@
     }
   }
 
-  // Função para ouvir apenas o texto do versículo (sem referência, sem aspas)
+  // Função para ouvir o versículo e, ao final, a referência
   function playAudio() {
     if (!currentVerseText) {
       alert("Nenhum versículo carregado. Busque um versículo primeiro.");
       return;
     }
     // Remove aspas do início/fim se houver
-    let textToSpeak = currentVerseText.replace(/^“|”$/g, '');
+    let cleanText = currentVerseText.replace(/^“|”$/g, '');
+    // Monta o texto: versículo + referência
+    const textToSpeak = `${cleanText}. ${currentVerseRef}`;
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(textToSpeak);
       utterance.lang = 'pt-BR';
