@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>História Sagrada | Deus, Jesus e os Seguidores</title>
+  <meta name="description" content="Conheça a história bíblica de Deus, Jesus Cristo e os primeiros seguidores. Uma jornada de fé, amor e redenção.">
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fefcf5;
+      color: #1e2a2e;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* container padrão */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* header */
+    .header {
+      background: linear-gradient(135deg, #1f3b2c 0%, #2c4a35 100%);
+      color: white;
+      padding: 2rem 0 1.8rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .header-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .logo p {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a:hover {
+      border-bottom-color: #f3b33d;
+      color: #ffeaC0;
+    }
+
+    /* versículo aleatório */
+    .verse-card {
+      background: #faf3e0;
+      border-left: 6px solid #c27e3a;
+      border-radius: 20px;
+      padding: 1.2rem 1.8rem;
+      margin: 2rem 0 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.03);
+    }
+
+    .verse-text {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #2d3e2b;
+      line-height: 1.4;
+    }
+
+    .verse-ref {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #a5651c;
+      margin-top: 6px;
+    }
+
+    .btn-verse {
+      background: #d9913b;
+      border: none;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-verse:hover {
+      background: #b56f2a;
+      transform: scale(0.97);
+    }
+
+    /* seções principais */
+    .section {
+      background: white;
+      border-radius: 32px;
+      margin: 3rem 0;
+      padding: 2rem 2rem 2.2rem;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease;
+      border: 1px solid #f0e5d2;
+    }
+
+    .section:hover {
+      transform: translateY(-4px);
+    }
+
+    .section-icon {
+      font-size: 2.8rem;
+      color: #c27e3a;
+      margin-bottom: 1rem;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2c4a35;
+      border-left: 5px solid #d9913b;
+      padding-left: 18px;
+    }
+
+    .section h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.5rem;
+      color: #1e3a2f;
+    }
+
+    .section p {
+      margin-bottom: 1rem;
+      color: #2c3e2f;
+      font-size: 1rem;
+    }
+
+    .highlight-list {
+      list-style: none;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .highlight-list li {
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .highlight-list li i {
+      color: #c27e3a;
+      font-size: 1.2rem;
+      margin-top: 0.2rem;
+      width: 24px;
+    }
+
+    .verse-mini {
+      background: #fef7e8;
+      padding: 0.8rem 1.2rem;
+      border-radius: 20px;
+      margin: 1.2rem 0;
+      font-style: italic;
+      border-right: 3px solid #e3b87c;
+    }
+
+    .grid-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .person-card {
+      background: #fefaf2;
+      flex: 1 1 180px;
+      padding: 1rem;
+      border-radius: 20px;
+      text-align: center;
+      transition: 0.2s;
+      border: 1px solid #eadbbe;
+    }
+
+    .person-card i {
+      font-size: 2rem;
+      color: #b5722e;
+      margin-bottom: 8px;
+    }
+
+    .person-card h4 {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    /* rodapé */
+    .footer {
+      background: #1e2f28;
+      color: #ddd9ce;
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+    }
+
+    .footer a {
+      color: #f3b86c;
+      text-decoration: none;
+    }
+
+    .btn-top {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #c27e3a;
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: 0.2s;
+      opacity: 0.7;
+    }
+
+    .btn-top:hover {
+      opacity: 1;
+      background: #9b5e24;
+    }
+
+    @media (max-width: 750px) {
+      .container {
+        padding: 0 18px;
+      }
+      .section {
+        padding: 1.5rem;
+      }
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      .verse-card {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+      .section h2 {
+        font-size: 1.6rem;
+      }
+    }
+
+    /* pequenos detalhes */
+    .btn-verse i {
+      font-size: 0.9rem;
+    }
+
+    hr {
+      margin: 10px 0;
+      border: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #e0cfb0, transparent);
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header-content">
+    <div class="logo">
+      <h1><i class="fas fa-bible" style="margin-right: 8px;"></i>Luz da Palavra</h1>
+      <p>História de Deus, Jesus e os que O seguiram</p>
+    </div>
+    <div class="nav-links">
+      <a href="#deus">Deus</a>
+      <a href="#jesus">Jesus Cristo</a>
+      <a href="#seguidores">Seguidores</a>
+      <a href="#verso"><i class="fas fa-scroll"></i> Versículo</a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <!-- Versículo aleatório (dinâmico) -->
+  <div id="verso" class="verse-card">
+    <div>
+      <div class="verse-text" id="randomVerseText">"No princípio, Deus criou os céus e a terra."</div>
+      <div class="verse-ref" id="randomVerseRef">Gênesis 1:1</div>
+    </div>
+    <button class="btn-verse" id="newVerseBtn"><i class="fas fa-sync-alt"></i> Novo versículo</button>
+  </div>
+
+  <!-- Seção: Deus -->
+  <section id="deus" class="section">
+    <div class="section-icon"><i class="fas fa-dove"></i></div>
+    <h2>Deus – O Criador e Pai da Aliança</h2>
+    <p>Desde o princípio, Deus revela Seu amor, poder e santidade. Criou os céus, a terra e toda a humanidade com um propósito eterno. Sua história é uma jornada de aliança, libertação e misericórdia infinita.</p>
+    <h3><i class="fas fa-star-of-life"></i> Principais momentos na história de Deus</h3>
+    <ul class="highlight-list">
+      <li><i class="fas fa-globe-americas"></i> <strong>Criação:</strong> Gênesis 1 — Deus forma todas as coisas e faz o homem à Sua imagem.</li>
+      <li><i class="fas fa-hand-peace"></i> <strong>Aliança com Abraão:</strong> Pai da fé, recebe a promessa de uma grande nação (Gênesis 12).</li>
+      <li><i class="fas fa-mountain"></i> <strong>Libertação do Egito:</strong> Por meio de Moisés, Deus liberta Israel e entrega a Lei no Sinai (Êxodo).</li>
+      <li><i class="fas fa-torah"></i> <strong>Profetas e esperança:</strong> Anuncia a vinda do Messias e um novo concerto de salvação (Jeremias, Isaías).</li>
+    </ul>
+    <div class="verse-mini">
+      <i class="fas fa-quote-left"></i> “Eu sou o Deus de Abraão, de Isaque e de Jacó.” — Êxodo 3:6<br>
+      <strong>Seu caráter:</strong> amor, justiça, fidelidade. Ele nunca abandona Seu povo.
+    </div>
+    <p>Deus age ao longo da história como Pai, juiz e redentor. Sua maior demonstração de amor se revela em Jesus Cristo, que veio para restaurar a comunhão entre Deus e a humanidade.</p>
+  </section>
+
+  <!-- Seção: Jesus -->
+  <section id="jesus" class="section">
+    <div class="section-icon"><i class="fas fa-cross"></i></div>
+    <h2>Jesus Cristo – O Filho, Salvador e Rei</h2>
+    <p>Jesus é o centro da história sagrada. Deus se fez homem, viveu entre nós, ensinou com autoridade, realizou milagres e entregou Sua vida para nos reconciliar com o Pai. Sua ressurreição venceu a morte e garante vida eterna.</p>
+    
+    <h3><i class="fas fa-cradle"></i> Nascimento e ministério</h3>
+    <p>Nascido da virgem Maria em Belém, Jesus cresceu em Nazaré. Aos 30 anos iniciou Seu ministério: pregou o Reino de Deus, curou enfermos, acolheu pecadores e desafiou tradições religiosas com amor e verdade.</p>
+    
+    <h3><i class="fas fa-hands-helping"></i> Milagres e ensinamentos</h3>
+    <ul class="highlight-list">
+      <li><i class="fas fa-water"></i> Transformou água em vinho (João 2).</li>
+      <li><i class="fas fa-eye"></i> Deu vista aos cegos e curou paralíticos.</li>
+      <li><i class="fas fa-bread-slice"></i> Multiplicou pães e peixes.</li>
+      <li><i class="fas fa-seedling"></i> Ensinou as bem-aventuranças e a parábola do filho pródigo.</li>
+    </ul>
+    <div class="verse-mini">
+      <i class="fas fa-quote-right"></i> “Eu sou o caminho, a verdade e a vida. Ninguém vem ao Pai senão por mim.” — João 14:6
+    </div>
+    <h3><i class="fas fa-church"></i> Morte e ressurreição</h3>
+    <p>Entregue por Judas, Jesus foi crucificado no Gólgota. Ao terceiro dia, ressuscitou gloriosamente, apareceu a mais de 500 pessoas e ascendeu ao céu. Hoje, reina à direita de Deus e intercede por nós.</p>
+  </section>
+
+  <!-- Seção: Seguidores (discípulos e apóstolos) -->
+  <section id="seguidores" class="section">
+    <div class="section-icon"><i class="fas fa-users"></i></div>
+    <h2>Os Seguidores – Discípulos e a Igreja Primitiva</h2>
+    <p>Homens e mulheres comuns que foram transformados pelo encontro com Jesus. Após a ressurreição, cheios do Espírito Santo, espalharam o evangelho até os confins da terra, enfrentando perseguições com ousadia e amor.</p>
+    
+    <h3><i class="fas fa-user-friends"></i> Os 12 apóstolos e líderes</h3>
+    <div class="grid-cards">
+      <div class="person-card"><i class="fas fa-fish"></i><h4>Pedro</h4><small>Apóstolo, pregou em Pentecostes</small></div>
+      <div class="person-card"><i class="fas fa-feather-alt"></i><h4>João</h4><small>O discípulo amado, autor do evangelho</small></div>
+      <div class="person-card"><i class="fas fa-scroll"></i><h4>Paulo</h4><small>Missionário, escreveu 13 cartas</small></div>
+      <div class="person-card"><i class="fas fa-hand-holding-heart"></i><h4>Estêvão</h4><small>Primeiro mártir, cheio de fé</small></div>
+      <div class="person-card"><i class="fas fa-church"></i><h4>Barnabé</h4><small>Encouragador, companheiro de Paulo</small></div>
+    </div>
+    <h3><i class="fas fa-globe"></i> Expansão do cristianismo</h3>
+    <p>Após Pentecostes, Pedro e João anunciaram Jesus em Jerusalém. Paulo, antes perseguidor, converteu-se e levou o evangelho à Ásia Menor e Roma. Milhares de judeus e gentios creram, formando comunidades de amor, partilha e oração.</p>
+    <ul class="highlight-list">
+      <li><i class="fas fa-dove"></i> <strong>Atos dos Apóstolos:</strong> relato histórico da igreja primitiva.</li>
+      <li><i class="fas fa-shield-alt"></i> <strong>Martírio:</strong> muitos seguidores deram a vida por declarar Jesus como Senhor.</li>
+      <li><i class="fas fa-hand-peace"></i> <strong>Legado:</strong> os escritos do Novo Testamento orientam a fé cristã até hoje.</li>
+    </ul>
+    <div class="verse-mini">
+      <i class="fas fa-bible"></i> “Ide, portanto, fazei discípulos de todas as nações...” — Mateus 28:19
+    </div>
+    <p>Os seguidores de Jesus nos ensinam que a fé genuína se expressa em amor, coragem e obediência. Atualmente, milhões de cristãos continuam essa missão ao redor do mundo.</p>
+  </section>
+
+  <!-- Seção adicional com linha do tempo resumida -->
+  <div style="background: #f7f2e4; border-radius: 28px; padding: 1.5rem; margin: 1rem 0 2rem;">
+    <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: space-between;">
+      <div><i class="fas fa-hourglass-half" style="font-size: 2rem; color: #b5722e;"></i></div>
+      <div><strong>📖 Resumo da História da Salvação:</strong> Criação → Aliança → Profetas → Jesus (Vida, Morte e Ressurreição) → Igreja → Esperança eterna.</div>
+      <div><i class="fas fa-heart" style="color: #c27e3a;"></i></div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p><i class="fas fa-cross"></i> Conheça mais sobre a Palavra de Deus — fonte de verdade e amor.</p>
+    <p style="margin-top: 12px;">“Examinais as Escrituras, porque julgais ter nelas a vida eterna; e são elas que de mim testificam.” (João 5:39)</p>
+    <hr style="background: #5b7c67; width: 60px; margin: 16px auto;">
+    <p style="font-size: 0.8rem;">&copy; 2025 · Luz da Palavra | Site inspirado na história de Deus, Jesus e seus seguidores</p>
+    <p><a href="#"><i class="fas fa-arrow-up"></i> Voltar ao início</a></p>
+  </div>
+</footer>
+
+<a href="#" class="btn-top" aria-label="Voltar ao topo"><i class="fas fa-chevron-up"></i></a>
+
+<script>
+  // Lista de versículos bíblicos em português (inspiradores e centrais)
+  const verses = [
+    { text: "No princípio, Deus criou os céus e a terra.", ref: "Gênesis 1:1" },
+    { text: "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.", ref: "João 3:16" },
+    { text: "O Senhor é o meu pastor; nada me faltará.", ref: "Salmos 23:1" },
+    { text: "Jesus Cristo é o mesmo, ontem, hoje e eternamente.", ref: "Hebreus 13:8" },
+    { text: "Vinde a mim, todos os que estais cansados e oprimidos, e eu vos aliviarei.", ref: "Mateus 11:28" },
+    { text: "Aquele que crê em mim, ainda que morra, viverá.", ref: "João 11:25" },
+    { text: "Ide por todo o mundo, pregai o evangelho a toda criatura.", ref: "Marcos 16:15" },
+    { text: "Mas recebereis poder ao descer sobre vós o Espírito Santo, e sereis minhas testemunhas.", ref: "Atos 1:8" },
+    { text: "Tudo posso naquele que me fortalece.", ref: "Filipenses 4:13" },
+    { text: "Eis que estou convosco todos os dias, até a consumação dos séculos.", ref: "Mateus 28:20" },
+    { text: "Não temas, porque eu sou contigo; não te assombres, porque eu sou teu Deus.", ref: "Isaías 41:10" },
+    { text: "Em ti, Senhor, me refugio; nunca seja eu envergonhado.", ref: "Salmos 31:1" },
+    { text: "A tua palavra é lâmpada para os meus pés e luz para o meu caminho.", ref: "Salmos 119:105" }
+  ];
+
+  const randomVerseTextEl = document.getElementById('randomVerseText');
+  const randomVerseRefEl = document.getElementById('randomVerseRef');
+  const newVerseBtn = document.getElementById('newVerseBtn');
+
+  function getRandomVerse() {
+    const randomIndex = Math.floor(Math.random() * verses.length);
+    return verses[randomIndex];
+  }
+
+  function updateVerse() {
+    const verse = getRandomVerse();
+    randomVerseTextEl.textContent = `“${verse.text}”`;
+    randomVerseRefEl.textContent = verse.ref;
+  }
+
+  // Inicializa com um versículo aleatório
+  updateVerse();
+
+  // Evento do botão
+  newVerseBtn.addEventListener('click', updateVerse);
+</script>
+</body>
+</html>
