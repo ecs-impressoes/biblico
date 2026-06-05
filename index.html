@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Álbum Fotográfico A4 - 5 fotos aleatórias por folha com bordas</title>
+    <title>Álbum A4 Vertical - 5 fotos aleatórias com bordas</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         * {
@@ -155,14 +155,14 @@
 </head>
 <body>
 <div class="container">
-    <h1>📸 Álbum Aleatório A4</h1>
-    <div class="sub">5 fotos por folha · tamanhos aleatórios mas bem distribuídos · borda em cada imagem</div>
+    <h1>📸 Álbum A4 Vertical</h1>
+    <div class="sub">5 fotos por folha · tamanhos totalmente aleatórios · borda em cada imagem · orientação retrato</div>
 
     <div class="upload-area" id="uploadArea">
         <input type="file" id="fileInput" accept="image/jpeg, image/png, image/jpg, image/webp" multiple>
         <div>
             <span class="btn-upload" id="triggerUpload">📁 Selecionar fotos</span>
-            <p style="margin-top: 16px; font-size: 0.85rem; color: #334155;">Escolha quantas imagens quiser. O álbum distribuirá as fotos aleatoriamente em páginas A4 com 5 fotos cada, todas com bordas.</p>
+            <p style="margin-top: 16px; font-size: 0.85rem; color: #334155;">Escolha quantas imagens quiser. O álbum será gerado em páginas verticais (A4 retrato).</p>
         </div>
     </div>
 
@@ -170,15 +170,15 @@
 
     <div class="info-bar">
         <div class="badge" id="photoCount">📷 Nenhuma foto selecionada</div>
-        <button id="generateBtn" class="btn-generate" disabled>✨ Gerar Álbum em PDF</button>
+        <button id="generateBtn" class="btn-generate" disabled>✨ Gerar Álbum em PDF (Vertical)</button>
     </div>
     <div id="statusMsg" class="status">
         ⚡ Aguardando imagens...
     </div>
     <footer>
-        Cada página A4 (210x297mm) exibe 5 fotos com tamanhos aleatórios gerados por particionamento recursivo.<br>
-        ✅ Distribuição orgânica e preenchimento completo da folha.<br>
-        🖼️ Borda preta fina (0,5 mm) em cada foto.
+        ✅ Formato da página: A4 em pé (210mm largura x 297mm altura).<br>
+        🎲 Layout aleatório por particionamento recursivo: 5 fotos preenchem toda a folha.<br>
+        🖼️ Borda preta (0,5 mm) em cada foto.
     </footer>
 </div>
 
@@ -229,7 +229,7 @@
         }
         photoCountSpan.innerHTML = `🖼️ ${selectedImages.length} foto(s) selecionada(s) — ${Math.ceil(selectedImages.length / 5)} página(s)`;
         generateBtn.disabled = false;
-        statusDiv.innerHTML = `✅ ${selectedImages.length} imagens carregadas. Clique em "Gerar Álbum" para criar PDF (5 fotos/página com layout aleatório e bordas).`;
+        statusDiv.innerHTML = `✅ ${selectedImages.length} imagens carregadas. Clique em "Gerar Álbum" para criar PDF vertical.`;
         
         for (let i = 0; i < Math.min(selectedImages.length, 30); i++) {
             const imgDiv = document.createElement('img');
@@ -283,33 +283,26 @@
     });
 
     // ========== LAYOUT ALEATÓRIO POR PARTICIONAMENTO (5 REGIÕES) ==========
-    // Gera 5 retângulos que preenchem exatamente a página A4 (210x297 mm)
-    // Usa divisões recursivas: a partir de um retângulo, escolhe direção (horizontal/vertical)
-    // e ponto de corte aleatório (entre 30% e 70% do tamanho), divide em duas partes,
-    // e repete até ter exatamente 5 retângulos. Garante que nenhum retângulo fique muito pequeno.
+    // Gera 5 retângulos que preenchem exatamente a página A4 VERTICAL (210x297 mm)
     function generateRandomLayout() {
-        const pageW = 210;  // mm
-        const pageH = 297;  // mm
+        const pageW = 210;  // mm (largura)
+        const pageH = 297;  // mm (altura)
         const minSize = 35; // mm mínimo para qualquer retângulo (evita fatias muito finas)
         
-        // Estrutura: cada nó é { x, y, w, h }
         let rectangles = [{ x: 0, y: 0, w: pageW, h: pageH }];
         
-        // Função para dividir um retângulo em dois, aleatoriamente na horizontal ou vertical
         function splitRect(rect) {
-            const dir = Math.random() < 0.5 ? 'h' : 'v'; // h = horizontal (corte vertical), v = vertical (corte horizontal)
+            const dir = Math.random() < 0.5 ? 'h' : 'v';
             let splitPos;
             if (dir === 'h') {
-                // Corte vertical: divide em largura
                 const minW = minSize;
                 const maxW = rect.w - minSize;
-                if (maxW <= minW) return null; // não é possível dividir
+                if (maxW <= minW) return null;
                 splitPos = Math.floor(Math.random() * (maxW - minW + 1) + minW);
                 const rect1 = { x: rect.x, y: rect.y, w: splitPos, h: rect.h };
                 const rect2 = { x: rect.x + splitPos, y: rect.y, w: rect.w - splitPos, h: rect.h };
                 return [rect1, rect2];
             } else {
-                // Corte horizontal: divide em altura
                 const minH = minSize;
                 const maxH = rect.h - minH;
                 if (maxH <= minH) return null;
@@ -320,11 +313,8 @@
             }
         }
         
-        // Enquanto tivermos menos de 5 retângulos, tenta dividir um existente
-        // Evita loop infinito: se não for possível dividir nenhum, força divisão em algum lugar
         let maxAttempts = 100;
         while (rectangles.length < 5 && maxAttempts-- > 0) {
-            // Escolhe um retângulo aleatório para dividir (priorizar os maiores)
             let idx = -1;
             for (let i = 0; i < rectangles.length; i++) {
                 if (rectangles[i].w >= minSize * 2 || rectangles[i].h >= minSize * 2) {
@@ -333,7 +323,6 @@
                 }
             }
             if (idx === -1) {
-                // Se nenhum é grande o suficiente, tenta qualquer um
                 idx = Math.floor(Math.random() * rectangles.length);
             }
             const rectToSplit = rectangles[idx];
@@ -343,11 +332,9 @@
             }
         }
         
-        // Se ainda não temos 5, ajuste final: forçar divisão do maior retângulo restante
         while (rectangles.length < 5) {
             rectangles.sort((a,b) => (b.w * b.h) - (a.w * a.h));
             const biggest = rectangles[0];
-            // Tenta dividir na direção mais promissora
             if (biggest.w >= minSize * 2) {
                 const splitW = Math.floor(biggest.w / 2);
                 const rect1 = { x: biggest.x, y: biggest.y, w: splitW, h: biggest.h };
@@ -359,16 +346,12 @@
                 const rect2 = { x: biggest.x, y: biggest.y + splitH, w: biggest.w, h: biggest.h - splitH };
                 rectangles.splice(0, 1, rect1, rect2);
             } else {
-                // Se não dá pra dividir, aceita e para (não deve acontecer)
                 break;
             }
         }
         
-        // Limita ao máximo 5 (caso tenha mais por algum motivo)
         if (rectangles.length > 5) rectangles = rectangles.slice(0, 5);
         
-        // Pequeno ajuste para evitar sobreposição por arredondamento (garantir soma exata)
-        // e também embaralhar a ordem dos retângulos para maior aleatoriedade visual
         for (let i = 0; i < rectangles.length; i++) {
             rectangles[i].w = Math.round(rectangles[i].w * 10) / 10;
             rectangles[i].h = Math.round(rectangles[i].h * 10) / 10;
@@ -376,7 +359,7 @@
             if (rectangles[i].y + rectangles[i].h > pageH) rectangles[i].h = pageH - rectangles[i].y;
         }
         
-        // Embaralhar a ordem dos retângulos para que as fotos não fiquem sempre na mesma posição relativa
+        // Embaralhar a ordem dos retângulos
         for (let i = rectangles.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [rectangles[i], rectangles[j]] = [rectangles[j], rectangles[i]];
@@ -385,7 +368,7 @@
         return rectangles;
     }
     
-    // Desenha uma imagem dentro do retângulo (centralizada/preenchimento) e adiciona borda
+    // Desenha imagem com borda
     function drawImageInRectWithBorder(pdf, imgUrl, x, y, w, h) {
         return new Promise((resolve) => {
             const img = new Image();
@@ -408,7 +391,7 @@
                         dy = y;
                     }
                     pdf.addImage(img, 'JPEG', dx, dy, drawW, drawH, undefined, 'FAST');
-                    // Adicionar borda ao redor do retângulo original (0.5mm, cor preta)
+                    // Borda preta 0.5mm
                     pdf.setDrawColor(0, 0, 0);
                     pdf.setLineWidth(0.5);
                     pdf.rect(x, y, w, h, 'S');
@@ -423,15 +406,16 @@
         });
     }
     
-    // Gerar PDF completo
+    // Gerar PDF com orientação vertical explícita
     generateBtn.addEventListener('click', async () => {
         if (selectedImages.length === 0) {
             statusDiv.innerHTML = '❌ Nenhuma foto para gerar o álbum.';
             return;
         }
-        statusDiv.innerHTML = '🎨 Criando layout aleatório e processando imagens... Aguarde.';
+        statusDiv.innerHTML = '🎨 Criando layout aleatório em folha vertical... Aguarde.';
         generateBtn.disabled = true;
         
+        // Força orientação 'portrait' (vertical)
         const pdf = new jsPDF({
             unit: 'mm',
             format: 'a4',
@@ -442,7 +426,7 @@
         const totalPages = Math.ceil(totalPhotos / 5);
         let photoIndex = 0;
         
-        // Embaralhar a ordem geral das fotos para distribuição aleatória no álbum
+        // Embaralhar fotos
         const shuffledPhotos = [...selectedImages];
         for (let i = shuffledPhotos.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -452,10 +436,7 @@
         for (let page = 0; page < totalPages; page++) {
             if (page !== 0) pdf.addPage();
             
-            // Gera layout aleatório de 5 retângulos para esta página
             const layout = generateRandomLayout();
-            
-            // Seleciona as 5 fotos para esta página (ou menos se for a última)
             const pagePhotos = [];
             for (let i = 0; i < 5; i++) {
                 if (photoIndex < shuffledPhotos.length) {
@@ -465,14 +446,12 @@
                 }
             }
             
-            // Desenha cada foto em seu retângulo (com borda)
             for (let slot = 0; slot < layout.length; slot++) {
                 const rect = layout[slot];
                 const photo = pagePhotos[slot];
                 if (photo && rect.w > 2 && rect.h > 2) {
                     await drawImageInRectWithBorder(pdf, photo.url, rect.x, rect.y, rect.w, rect.h);
                 } else if (!photo) {
-                    // Caso não haja foto, desenha um retângulo cinza com borda
                     pdf.setFillColor(240, 240, 240);
                     pdf.setDrawColor(0, 0, 0);
                     pdf.setLineWidth(0.5);
@@ -481,8 +460,8 @@
             }
         }
         
-        pdf.save(`album_aleatorio_bordas_${new Date().toISOString().slice(0,19)}.pdf`);
-        statusDiv.innerHTML = `✅ Álbum gerado com sucesso! ${totalPages} página(s) criadas. Distribuição aleatória (5 fotos por folha) com bordas individuais.`;
+        pdf.save(`album_vertical_${new Date().toISOString().slice(0,19)}.pdf`);
+        statusDiv.innerHTML = `✅ Álbum vertical gerado! ${totalPages} página(s) criadas. Fotos dispostas em folha A4 retrato.`;
         generateBtn.disabled = false;
     });
 </script>
