@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Gerador de Álbum Fotográfico Automático - A4 com 5 fotos</title>
-    <!-- jsPDF library -->
+    <title>Álbum Fotográfico A4 - 5 fotos aleatórias por folha com bordas</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- Opcional: para garantir suporte a imagens -->
     <style>
         * {
             box-sizing: border-box;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f7fb;
+            background: #f0f4f8;
             margin: 0;
             padding: 20px;
             color: #1e293b;
@@ -157,14 +155,14 @@
 </head>
 <body>
 <div class="container">
-    <h1>📸 Gerador de Álbum A4 Automático</h1>
-    <div class="sub">5 fotos por folha · duas sempre 10x15cm (ou 15x10) · 3 com medidas aleatórias · layout inteligente</div>
+    <h1>📸 Álbum Aleatório A4</h1>
+    <div class="sub">5 fotos por folha · tamanhos aleatórios mas bem distribuídos · borda em cada imagem</div>
 
     <div class="upload-area" id="uploadArea">
         <input type="file" id="fileInput" accept="image/jpeg, image/png, image/jpg, image/webp" multiple>
         <div>
             <span class="btn-upload" id="triggerUpload">📁 Selecionar fotos</span>
-            <p style="margin-top: 16px; font-size: 0.85rem; color: #334155;">Escolha quantas imagens quiser. O álbum irá distribuir aleatoriamente as fotos, gerando páginas A4 com 5 imagens cada.</p>
+            <p style="margin-top: 16px; font-size: 0.85rem; color: #334155;">Escolha quantas imagens quiser. O álbum distribuirá as fotos aleatoriamente em páginas A4 com 5 fotos cada, todas com bordas.</p>
         </div>
     </div>
 
@@ -178,21 +176,17 @@
         ⚡ Aguardando imagens...
     </div>
     <footer>
-        Cada página A4 (210x297mm) contém 5 imagens.<br>
-        ✅ Duas fotos fixas: 100x150mm (10x15cm) OU 150x100mm (15x10cm) — orientação aleatória por página.<br>
-        🎲 Três fotos restantes: dimensões aleatórias que preenchem perfeitamente o espaço remanescente (layout adaptativo dinâmico).
+        Cada página A4 (210x297mm) exibe 5 fotos com tamanhos aleatórios gerados por particionamento recursivo.<br>
+        ✅ Distribuição orgânica e preenchimento completo da folha.<br>
+        🖼️ Borda preta fina (0,5 mm) em cada foto.
     </footer>
 </div>
 
 <script>
-    // ---------------------- LÓGICA PRINCIPAL ----------------------
-    // Usaremos jsPDF versão UMD
     const { jsPDF } = window.jspdf;
+    let selectedImages = [];   // array de objetos { file, url, name, width, height }
 
-    let selectedImages = [];   // array de objetos { file, url, name, width, height } (largura/altura original para orientação, mas não essencial)
-    let imageDataURLs = [];     // armazenar URLs para desenho no canvas
-
-    // DOM elements
+    // Elementos DOM
     const fileInput = document.getElementById('fileInput');
     const uploadArea = document.getElementById('uploadArea');
     const triggerBtn = document.getElementById('triggerUpload');
@@ -201,7 +195,7 @@
     const generateBtn = document.getElementById('generateBtn');
     const statusDiv = document.getElementById('statusMsg');
 
-    // Helper: carregar imagem e obter URL
+    // Carregar imagem a partir do File
     function loadImage(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -224,7 +218,7 @@
         });
     }
 
-    // Atualiza preview e contagem
+    // Atualizar galeria de miniaturas e contador
     async function updateGallery() {
         previewContainer.innerHTML = '';
         if (selectedImages.length === 0) {
@@ -233,9 +227,9 @@
             statusDiv.innerHTML = '🖼️ Selecione imagens para iniciar.';
             return;
         }
-        photoCountSpan.innerHTML = `🖼️ ${selectedImages.length} foto(s) selecionada(s) — ${Math.ceil(selectedImages.length / 5)} página(s) esperadas`;
+        photoCountSpan.innerHTML = `🖼️ ${selectedImages.length} foto(s) selecionada(s) — ${Math.ceil(selectedImages.length / 5)} página(s)`;
         generateBtn.disabled = false;
-        statusDiv.innerHTML = `✅ ${selectedImages.length} imagens carregadas. Clique em "Gerar Álbum" para criar PDF (5 fotos/página com layout dinâmico).`;
+        statusDiv.innerHTML = `✅ ${selectedImages.length} imagens carregadas. Clique em "Gerar Álbum" para criar PDF (5 fotos/página com layout aleatório e bordas).`;
         
         for (let i = 0; i < Math.min(selectedImages.length, 30); i++) {
             const imgDiv = document.createElement('img');
@@ -257,10 +251,10 @@
         }
     }
 
-    // Evento de upload
+    // Eventos de upload
     triggerBtn.addEventListener('click', () => fileInput.click());
     uploadArea.addEventListener('click', (e) => {
-        if(e.target === uploadArea || e.target === uploadArea.querySelector('div') || e.target === uploadArea.querySelector('p')) {
+        if (e.target === uploadArea || e.target === uploadArea.querySelector('div') || e.target === uploadArea.querySelector('p')) {
             fileInput.click();
         }
     });
@@ -288,210 +282,113 @@
         fileInput.value = '';
     });
 
-    // ========== LÓGICA DE LAYOUT ALEATÓRIO MAS COMPLETO ==========
-    // Objetivo: para cada página (folha A4 210x297mm) gerar 5 retângulos (x,y,w,h em mm)
-    // que preenchem exatamente a página. Dois retângulos terão dimensões exatas de 10x15 cm (100x150mm) ou 15x10 (150x100mm)
-    // Os outros 3 retângulos terão dimensões aleatórias, mas que junto com os fixos completam a folha.
-    // Abordagem: algoritmo de particionamento recursivo, forçando dois blocos a terem tamanho fixo. Para garantir aleatoriedade e simplicidade,
-    // implementaremos um gerador de layouts que produz 5 áreas usando divisões binárias aleatórias,
-    // e depois identificamos dois nós que serão "tamanho fixo" adaptando seus tamanhos, rearranjando os demais nós para manter preenchimento.
-    // Porém, para robustez e evitar recursões complexas, criaremos uma função que constrói layouts a partir de templates paramétricos 
-    // que garantem completude + aleatoriedade nas três áreas variáveis.
-    
-    // Estratégia final (robusta e 100% preenchimento):
-    // Para cada página, sorteamos orientação das duas fixas (ambas 10x15 ou uma 10x15 e outra 15x10, etc)
-    // Definimos um layout por "faixas" e "colunas" com divisões percentuais aleatórias mas que respeitam os tamanhos fixos.
-    // CRIAREMOS 3 famílias de layout principal, cada uma com dois slots fixos e três variáveis.
-    // Método: 1) Caso "coluna esquerda + direita" 2) Caso "linha superior + inferior" 3) Caso "mosaico em L"
-    // Os tamanhos das áreas variáveis são calculados aleatoriamente (dentro de limites) respeitando soma total.
-    
-    // Para manter código enxuto e funcional, usaremos uma função que gera lista de retângulos para cada página.
-    // Parâmetros: randomSeed (usamos Math.random a cada página). Garantimos que as duas fotos fixas tenham dimensões exatas 100x150 ou 150x100.
-    // Retorna array de objetos: { x, y, w, h, isFixed, orientation } onde orientation 'portrait' ou 'landscape'.
-    
-    function generateRandomLayoutForPage(pageIndex) {
-        // Sorteia qual tipo de layout estrutural (3 variações)
-        const layoutType = Math.floor(Math.random() * 3); // 0,1,2
-        // Sorteia orientação das duas fotos fixas (podem ser ambas retrato, ambas paisagem, ou mistas)
-        // Para garantir duas fixas, vamos definir explicitamente dois slots com tamanhos exatos.
-        let rects = [];
+    // ========== LAYOUT ALEATÓRIO POR PARTICIONAMENTO (5 REGIÕES) ==========
+    // Gera 5 retângulos que preenchem exatamente a página A4 (210x297 mm)
+    // Usa divisões recursivas: a partir de um retângulo, escolhe direção (horizontal/vertical)
+    // e ponto de corte aleatório (entre 30% e 70% do tamanho), divide em duas partes,
+    // e repete até ter exatamente 5 retângulos. Garante que nenhum retângulo fique muito pequeno.
+    function generateRandomLayout() {
         const pageW = 210;  // mm
         const pageH = 297;  // mm
+        const minSize = 35; // mm mínimo para qualquer retângulo (evita fatias muito finas)
         
-        // ---------- LAYOUT TYPE 0: divisão vertical esquerda/direita com duas fixas na esquerda (empilhadas) - porém ajuste para caber 297mm ----------
-        if (layoutType === 0) {
-            // Esquema: coluna esquerda largura 100mm (retrato) ou 150mm (paisagem). Precisamos duas fotos fixas.
-            // Opção: duas fixas na esquerda: uma acima outra abaixo, ocupando toda a altura? não cabe 150+150. Melhor: coluna esquerda paisagem?
-            // Vamos fazer: duas fixas uma em cima da outra, mas com 15x10 (150x100) cada: total altura = 200mm, sobra 97mm na direita.
-            // Essa variante: duas fixas paisagem 150x100 na esquerda empilhadas -> w=150, h1=100, h2=100, y=0 e y=100.
-            // Lado direito: largura 60mm (210-150), altura total 297mm. Dividimos lado direito em 3 retângulos aleatórios que preencham altura 297mm.
-            const leftW = 150;   // paisagem (15cm largura)
-            const fixHeight = 100;
-            // duas fixas na esquerda
-            rects.push({ x: 0, y: 0, w: leftW, h: fixHeight, isFixed: true, orientation: 'landscape' });
-            rects.push({ x: 0, y: fixHeight, w: leftW, h: fixHeight, isFixed: true, orientation: 'landscape' });
-            // área restante direita: x = leftW, largura = pageW - leftW = 60, altura total 297.
-            const rightW = pageW - leftW; // 60mm
-            // Gerar 3 alturas aleatórias que somam pageH = 297
-            let hParts = [];
-            let remainingH = pageH;
-            for (let i = 0; i < 2; i++) {
-                let maxH = remainingH - (2 - i) * 30; // garantir espaço mínimo 30mm para as demais
-                let hVal = Math.floor(Math.random() * (maxH - 30 + 1) + 30);
-                hParts.push(hVal);
-                remainingH -= hVal;
-            }
-            hParts.push(remainingH); // última parte
-            // shuffle aleatório para ordem das alturas? manter ordenado
-            let yOffset = 0;
-            for (let i = 0; i < 3; i++) {
-                let hBlock = hParts[i];
-                rects.push({ x: leftW, y: yOffset, w: rightW, h: hBlock, isFixed: false, orientation: 'variable' });
-                yOffset += hBlock;
-            }
-        } 
-        // LAYOUT TYPE 1: duas fixas horizontais no topo (paisagem) e embaixo três áreas variáveis em colunas
-        else if (layoutType === 1) {
-            // duas fotos fixas lado a lado no topo: cada uma 15x10? Vamos colocar duas fotos paisagem 150x100.
-            // Porém largura total 210, duas paisagens 150+150 > 210, não cabe. Então colocamos uma paisagem e uma retrato no topo?
-            // Melhor: duas fixas 100x150 (retrato) lado a lado: largura total 200mm, altura 150mm. Sobra embaixo 297-150 = 147mm.
-            // Topo: duas fotos retrato 100x150 ocupam largura 200 (sobra 10mm de margem? Dividimos 0 a 100 e 110 a 210 com gap 10)
-            const gap = 10; // margem entre as duas fixas
-            const fixW = 100; // retrato largura
-            const fixH = 150;
-            rects.push({ x: 0, y: 0, w: fixW, h: fixH, isFixed: true, orientation: 'portrait' });
-            rects.push({ x: fixW + gap, y: 0, w: fixW, h: fixH, isFixed: true, orientation: 'portrait' });
-            // área restante abaixo: y = fixH, largura total 210, altura restante = pageH - fixH = 147mm
-            const bottomH = pageH - fixH; // 147
-            // Dividir região inferior em 3 retângulos com larguras aleatórias que somam 210, e altura = bottomH
-            let widths = [];
-            let remainW = pageW;
-            for (let i = 0; i < 2; i++) {
-                let maxW = remainW - (2 - i) * 40;
-                let wVal = Math.floor(Math.random() * (maxW - 40 + 1) + 40);
-                widths.push(wVal);
-                remainW -= wVal;
-            }
-            widths.push(remainW);
-            let xOff = 0;
-            for (let i = 0; i < 3; i++) {
-                rects.push({ x: xOff, y: fixH, w: widths[i], h: bottomH, isFixed: false, orientation: 'variable' });
-                xOff += widths[i];
-            }
-        }
-        // LAYOUT TYPE 2: layout mais livre com uma fixa grande retrato no canto e outra fixa paisagem, mais 3 regiões dinâmicas
-        else {
-            // Exemplo: fixa retrato (100x150) no canto superior esquerdo + fixa paisagem (150x100) no canto inferior direito,
-            // e três retângulos variáveis preenchem os espaços restantes de forma inteligente.
-            // Diagrama: R1 (fixa retrato) x=0,y=0,w=100,h=150
-            // R2 (fixa paisagem) x=60? Precisamos que paisagem 150x100. Vamos colocar no canto inferior direito: x=60, y=197, w=150, h=100
-            // Verificar compatibilidade:
-            const fixPortW = 100, fixPortH = 150;
-            const fixLandW = 150, fixLandH = 100;
-            rects.push({ x: 0, y: 0, w: fixPortW, h: fixPortH, isFixed: true, orientation: 'portrait' });
-            // posição paisagem: y = pageH - fixLandH = 197, x = pageW - fixLandW = 60
-            rects.push({ x: pageW - fixLandW, y: pageH - fixLandH, w: fixLandW, h: fixLandH, isFixed: true, orientation: 'landscape' });
-            // Agora preencher áreas restantes (três retângulos) que cobrem toda a página sem overlap.
-            // Vamos definir manualmente 3 polígonos que preenchem: 
-            // Região A: superior direita após retrato (x=100, y=0, w=110, h=150) -> 1 variável
-            // Região B: abaixo do retrato + esquerda da paisagem (x=0, y=150, w=100, h=47) e (x=100, y=150, w=60, h=147?) Mas precisa de simplificação.
-            // Melhor usar subdivisão: adicionar três retângulos baseados nos gaps.
-            // Retângulo V1: canto superior direito: x=fixPortW, y=0, w=pageW-fixPortW, h=fixPortH
-            rects.push({ x: fixPortW, y: 0, w: pageW - fixPortW, h: fixPortH, isFixed: false, orientation: 'variable' });
-            // Retângulo V2: faixa intermediária entre altura fixPortH e início da paisagem (y=150 até 197)
-            const midYStart = fixPortH;
-            const midYEnd = pageH - fixLandH; // 197
-            const midHeight = midYEnd - midYStart; // 47mm
-            // Dividir essa faixa em dois retângulos horizontais aleatórios? vamos fazer apenas um retângulo grande V2 e V3 separado.
-            // Mas preciso de 3 variáveis: já temos V1. V2: região esquerda abaixo do retrato (x=0, y=150, w=fixPortW, h=midHeight)
-            rects.push({ x: 0, y: midYStart, w: fixPortW, h: midHeight, isFixed: false, orientation: 'variable' });
-            // V3: região direita no meio + restante inferior esquerdo? na verdade área à direita da paisagem + abaixo. Mas devemos ter cuidado com overlap.
-            // Área restante: retângulo grande que cobre (x=fixPortW, y=midYStart, w=pageW-fixPortW, h=pageH-midYStart) exceto o espaço da paisagem.
-            // Para não complicar, farei um retângulo V3 dinâmico que cobre toda área não preenchida (que será um polígono simples, mas podemos particionar em dois retângulos para manter 5 no total? Já temos 5 incluindo V1,V2 + 2 fixas = 4, falta um. 
-            // Vou substituir estratégia: para esse layout type, garantimos 5 no total: 2 fixas + 3 variáveis geradas pela divisão do espaço restante em três partes por meio de um grid personalizado.
-            // Para evitar inconsistência, recriar type2 de forma mais segura: usar uma grade 2x2 mais uma célula extra.
-            // Vamos refazer type2 com coluna esquerda fixa retrato, e depois restante dividido em duas linhas e duas colunas.
-        }
+        // Estrutura: cada nó é { x, y, w, h }
+        let rectangles = [{ x: 0, y: 0, w: pageW, h: pageH }];
         
-        // Caso type2 gere inconsistência, reforce com uma solução alternativa confiável.
-        // Reconstruir type2 limpo: layout baseado em Grid 3 linhas e 2 colunas, onde duas células são fixas e outras três variam preenchendo.
-        // Reescrevemos type2 de forma clara.
-        if (layoutType === 2) {
-            rects = [];
-            // Layout: primeira coluna largura 100mm, segunda coluna largura 110mm.
-            // Na primeira coluna: duas células: uma fixa retrato (100x150) e abaixo uma variável que completa até 297.
-            // Na segunda coluna: três células variáveis com alturas aleatórias que preencham 297mm.
-            const leftW = 100;    // fixa retrato largura
-            const fixPortH = 150;
-            rects.push({ x: 0, y: 0, w: leftW, h: fixPortH, isFixed: true, orientation: 'portrait' });
-            // segunda fixa? precisa de mais uma fixa. Vamos colocar a segunda fixa no canto superior da coluna direita como paisagem 150x100? Largura da coluna direita = 110mm, não cabe paisagem de 150mm.
-            // então adaptamos: segunda fixa será retrato 100x150 também, mas na coluna direita. Coluna direita largura 110mm, mas usamos apenas 100mm.
-            // Fica: coluna direita subdividida: primeira célula fixa retrato 100x150 alinhada à esquerda da coluna direita, mais duas variáveis.
-            const rightW = pageW - leftW; // 110mm
-            rects.push({ x: leftW, y: 0, w: 100, h: fixPortH, isFixed: true, orientation: 'portrait' });
-            // Espaços restantes: abaixo do retrato esquerdo: área (0,150,100,147)
-            const leftBottomH = pageH - fixPortH;
-            rects.push({ x: 0, y: fixPortH, w: leftW, h: leftBottomH, isFixed: false, orientation: 'variable' });
-            // Na direita: após a fixa ( y=0 a 150), espaço à direita e abaixo.
-            // Célula variável direita superior direita: x=leftW+100 = 200? largura 10mm, mas é minimal. Melhor reorganizar:
-            // em vez disso, use divisão da coluna direita: após a foto fixa (largura 100mm), sobram 10mm de largura, podemos mesclar.
-            // Para evitar complexidade, adotamos layout definitivo: duas fixas ambas retrato, uma na esquerda (0,0), outra na direita (110,0), largura 100 cada, sobra 10mm gap central.
-            // e embaixo 3 variáveis que preenchem.
-            rects = [];
-            const fixWid = 100;
-            const gapCenter = 10;
-            rects.push({ x: 0, y: 0, w: fixWid, h: fixPortH, isFixed: true, orientation: 'portrait' });
-            rects.push({ x: fixWid + gapCenter, y: 0, w: fixWid, h: fixPortH, isFixed: true, orientation: 'portrait' });
-            const bottomAreaY = fixPortH;
-            const bottomHeight = pageH - fixPortH; // 147
-            // dividir largura em 3 partes aleatórias: larguras total = pageW =210
-            let colWidths = [];
-            let remainWidth = pageW;
-            for (let i=0;i<2;i++) {
-                let maxW = remainWidth - (2-i)*35;
-                let wv = Math.floor(Math.random() * (maxW-35+1) + 35);
-                colWidths.push(wv);
-                remainWidth -= wv;
-            }
-            colWidths.push(remainWidth);
-            let xCursor = 0;
-            for (let i=0;i<3;i++) {
-                rects.push({ x: xCursor, y: bottomAreaY, w: colWidths[i], h: bottomHeight, isFixed: false, orientation: 'variable' });
-                xCursor += colWidths[i];
+        // Função para dividir um retângulo em dois, aleatoriamente na horizontal ou vertical
+        function splitRect(rect) {
+            const dir = Math.random() < 0.5 ? 'h' : 'v'; // h = horizontal (corte vertical), v = vertical (corte horizontal)
+            let splitPos;
+            if (dir === 'h') {
+                // Corte vertical: divide em largura
+                const minW = minSize;
+                const maxW = rect.w - minSize;
+                if (maxW <= minW) return null; // não é possível dividir
+                splitPos = Math.floor(Math.random() * (maxW - minW + 1) + minW);
+                const rect1 = { x: rect.x, y: rect.y, w: splitPos, h: rect.h };
+                const rect2 = { x: rect.x + splitPos, y: rect.y, w: rect.w - splitPos, h: rect.h };
+                return [rect1, rect2];
+            } else {
+                // Corte horizontal: divide em altura
+                const minH = minSize;
+                const maxH = rect.h - minH;
+                if (maxH <= minH) return null;
+                splitPos = Math.floor(Math.random() * (maxH - minH + 1) + minH);
+                const rect1 = { x: rect.x, y: rect.y, w: rect.w, h: splitPos };
+                const rect2 = { x: rect.x, y: rect.y + splitPos, w: rect.w, h: rect.h - splitPos };
+                return [rect1, rect2];
             }
         }
         
-        // Garantir que temos exatamente 5 retângulos
-        while(rects.length < 5) rects.push({ x:0, y:0, w:50, h:50, isFixed: false });
-        if (rects.length > 5) rects = rects.slice(0,5);
-        // As duas fixas devem estar marcadas como isFixed = true e suas dimensões exatas. Caso não existam duas fixas, forçamos.
-        let fixedCount = rects.filter(r => r.isFixed === true).length;
-        if (fixedCount < 2) {
-            for (let i=0; i<rects.length && fixedCount<2; i++) {
-                if (!rects[i].isFixed) {
-                    rects[i].isFixed = true;
-                    if (Math.random() < 0.5) {
-                        rects[i].w = 100; rects[i].h = 150; rects[i].orientation = 'portrait';
-                    } else {
-                        rects[i].w = 150; rects[i].h = 100; rects[i].orientation = 'landscape';
-                    }
-                    fixedCount++;
+        // Enquanto tivermos menos de 5 retângulos, tenta dividir um existente
+        // Evita loop infinito: se não for possível dividir nenhum, força divisão em algum lugar
+        let maxAttempts = 100;
+        while (rectangles.length < 5 && maxAttempts-- > 0) {
+            // Escolhe um retângulo aleatório para dividir (priorizar os maiores)
+            let idx = -1;
+            for (let i = 0; i < rectangles.length; i++) {
+                if (rectangles[i].w >= minSize * 2 || rectangles[i].h >= minSize * 2) {
+                    idx = i;
+                    break;
                 }
             }
+            if (idx === -1) {
+                // Se nenhum é grande o suficiente, tenta qualquer um
+                idx = Math.floor(Math.random() * rectangles.length);
+            }
+            const rectToSplit = rectangles[idx];
+            const newRects = splitRect(rectToSplit);
+            if (newRects) {
+                rectangles.splice(idx, 1, ...newRects);
+            }
         }
-        // Ajusta geometria para garantir que não extrapole bordas
-        for (let r of rects) {
-            if (r.x + r.w > pageW) r.w = pageW - r.x;
-            if (r.y + r.h > pageH) r.h = pageH - r.y;
+        
+        // Se ainda não temos 5, ajuste final: forçar divisão do maior retângulo restante
+        while (rectangles.length < 5) {
+            rectangles.sort((a,b) => (b.w * b.h) - (a.w * a.h));
+            const biggest = rectangles[0];
+            // Tenta dividir na direção mais promissora
+            if (biggest.w >= minSize * 2) {
+                const splitW = Math.floor(biggest.w / 2);
+                const rect1 = { x: biggest.x, y: biggest.y, w: splitW, h: biggest.h };
+                const rect2 = { x: biggest.x + splitW, y: biggest.y, w: biggest.w - splitW, h: biggest.h };
+                rectangles.splice(0, 1, rect1, rect2);
+            } else if (biggest.h >= minSize * 2) {
+                const splitH = Math.floor(biggest.h / 2);
+                const rect1 = { x: biggest.x, y: biggest.y, w: biggest.w, h: splitH };
+                const rect2 = { x: biggest.x, y: biggest.y + splitH, w: biggest.w, h: biggest.h - splitH };
+                rectangles.splice(0, 1, rect1, rect2);
+            } else {
+                // Se não dá pra dividir, aceita e para (não deve acontecer)
+                break;
+            }
         }
-        return rects;
+        
+        // Limita ao máximo 5 (caso tenha mais por algum motivo)
+        if (rectangles.length > 5) rectangles = rectangles.slice(0, 5);
+        
+        // Pequeno ajuste para evitar sobreposição por arredondamento (garantir soma exata)
+        // e também embaralhar a ordem dos retângulos para maior aleatoriedade visual
+        for (let i = 0; i < rectangles.length; i++) {
+            rectangles[i].w = Math.round(rectangles[i].w * 10) / 10;
+            rectangles[i].h = Math.round(rectangles[i].h * 10) / 10;
+            if (rectangles[i].x + rectangles[i].w > pageW) rectangles[i].w = pageW - rectangles[i].x;
+            if (rectangles[i].y + rectangles[i].h > pageH) rectangles[i].h = pageH - rectangles[i].y;
+        }
+        
+        // Embaralhar a ordem dos retângulos para que as fotos não fiquem sempre na mesma posição relativa
+        for (let i = rectangles.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [rectangles[i], rectangles[j]] = [rectangles[j], rectangles[i]];
+        }
+        
+        return rectangles;
     }
     
-    // Função para desenhar uma imagem em um retângulo no PDF (centralizar/cobrir)
-    function drawImageInRect(pdf, imgUrl, x, y, w, h) {
+    // Desenha uma imagem dentro do retângulo (centralizada/preenchimento) e adiciona borda
+    function drawImageInRectWithBorder(pdf, imgUrl, x, y, w, h) {
         return new Promise((resolve) => {
             const img = new Image();
-            img.crossOrigin = "Anonymous";
             img.onload = () => {
                 try {
                     const imgW = img.width;
@@ -511,8 +408,15 @@
                         dy = y;
                     }
                     pdf.addImage(img, 'JPEG', dx, dy, drawW, drawH, undefined, 'FAST');
+                    // Adicionar borda ao redor do retângulo original (0.5mm, cor preta)
+                    pdf.setDrawColor(0, 0, 0);
+                    pdf.setLineWidth(0.5);
+                    pdf.rect(x, y, w, h, 'S');
                     resolve();
-                } catch(e) { console.warn(e); resolve(); }
+                } catch(e) { 
+                    console.warn(e); 
+                    resolve();
+                }
             };
             img.onerror = () => resolve();
             img.src = imgUrl;
@@ -525,7 +429,7 @@
             statusDiv.innerHTML = '❌ Nenhuma foto para gerar o álbum.';
             return;
         }
-        statusDiv.innerHTML = '🎨 Processando imagens e gerando layout aleatório... Por favor, aguarde.';
+        statusDiv.innerHTML = '🎨 Criando layout aleatório e processando imagens... Aguarde.';
         generateBtn.disabled = true;
         
         const pdf = new jsPDF({
@@ -538,7 +442,7 @@
         const totalPages = Math.ceil(totalPhotos / 5);
         let photoIndex = 0;
         
-        // Embaralhar fotos para aleatoriedade no álbum
+        // Embaralhar a ordem geral das fotos para distribuição aleatória no álbum
         const shuffledPhotos = [...selectedImages];
         for (let i = shuffledPhotos.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -547,30 +451,38 @@
         
         for (let page = 0; page < totalPages; page++) {
             if (page !== 0) pdf.addPage();
-            const layout = generateRandomLayoutForPage(page);
-            const photosOnPage = [];
+            
+            // Gera layout aleatório de 5 retângulos para esta página
+            const layout = generateRandomLayout();
+            
+            // Seleciona as 5 fotos para esta página (ou menos se for a última)
+            const pagePhotos = [];
             for (let i = 0; i < 5; i++) {
                 if (photoIndex < shuffledPhotos.length) {
-                    photosOnPage.push(shuffledPhotos[photoIndex++]);
+                    pagePhotos.push(shuffledPhotos[photoIndex++]);
                 } else {
-                    photosOnPage.push(null);
+                    pagePhotos.push(null);
                 }
             }
+            
+            // Desenha cada foto em seu retângulo (com borda)
             for (let slot = 0; slot < layout.length; slot++) {
                 const rect = layout[slot];
-                const photo = photosOnPage[slot];
+                const photo = pagePhotos[slot];
                 if (photo && rect.w > 2 && rect.h > 2) {
-                    await drawImageInRect(pdf, photo.url, rect.x, rect.y, rect.w, rect.h);
+                    await drawImageInRectWithBorder(pdf, photo.url, rect.x, rect.y, rect.w, rect.h);
                 } else if (!photo) {
-                    pdf.setDrawColor(200);
-                    pdf.setFillColor(245, 245, 245);
-                    pdf.rect(rect.x, rect.y, rect.w, rect.h, 'F');
+                    // Caso não haja foto, desenha um retângulo cinza com borda
+                    pdf.setFillColor(240, 240, 240);
+                    pdf.setDrawColor(0, 0, 0);
+                    pdf.setLineWidth(0.5);
+                    pdf.rect(rect.x, rect.y, rect.w, rect.h, 'FD');
                 }
             }
         }
         
-        pdf.save(`album_automatico_${new Date().toISOString().slice(0,19)}.pdf`);
-        statusDiv.innerHTML = `✅ Álbum gerado com sucesso! ${totalPages} página(s) criada(s). As duas fotos fixas (10x15 ou 15x10) + 3 medidas aleatórias por folha.`;
+        pdf.save(`album_aleatorio_bordas_${new Date().toISOString().slice(0,19)}.pdf`);
+        statusDiv.innerHTML = `✅ Álbum gerado com sucesso! ${totalPages} página(s) criadas. Distribuição aleatória (5 fotos por folha) com bordas individuais.`;
         generateBtn.disabled = false;
     });
 </script>
